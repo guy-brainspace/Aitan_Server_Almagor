@@ -16,7 +16,6 @@ Receiving Fruits section:
         packing_mat ||--o{ receiving_fruits : "is part of"
         packing_house ||--o{ receiving_fruits : "is part of"
         growers ||--o{ receiving_fruits : "is part of"
-        fruits ||--|{ market_fruits : "is part of" 
 
 fruits{
         int ID PK

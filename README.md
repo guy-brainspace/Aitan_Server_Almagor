@@ -1,10 +1,6 @@
 # “Aitan”Packing House's management tool
 This project was developed to assist the packinghouse to be more efficient by capturing it entire activities.
 
-
-[![](https://mermaid.ink/img/pako:eNptkctOAzEMRX8l8oqKzg9E3SBKJRasukMjIU_iTq3JA_JQBaX_TmZgQmnJyj7Ota7tIyivCSQogzGuGfuAtnWivDvHFo1YfTaNWGc1XNMNx_01faYu4B8sxS27JLCnS7xNgV0venKawnlxlMQntCW8WVwULCaa4WR7snf8BqI27QiHe298qIV4YDsLS_qWUQ1zfjrvNw5W-zWj98gf9Og2RKlihe4B07_6aQW_hjrvjeD4cmCjKwzZVS0swVKwyLpcYtK1kPZkqQVZQk07zCa10LrxK-bkt-9OgUwh0xLyqy4b-bkdyB2aSKcvtHKQnw?type=png)](https://mermaid.live/edit#pako:eNptkctOAzEMRX8l8oqKzg9E3SBKJRasukMjIU_iTq3JA_JQBaX_TmZgQmnJyj7Ota7tIyivCSQogzGuGfuAtnWivDvHFo1YfTaNWGc1XNMNx_01faYu4B8sxS27JLCnS7xNgV0venKawnlxlMQntCW8WVwULCaa4WR7snf8BqI27QiHe298qIV4YDsLS_qWUQ1zfjrvNw5W-zWj98gf9Og2RKlihe4B07_6aQW_hjrvjeD4cmCjKwzZVS0swVKwyLpcYtK1kPZkqQVZQk07zCa10LrxK-bkt-9OgUwh0xLyqy4b-bkdyB2aSKcvtHKQnw)
-
-
 # Technological tools:
  ![image](https://user-images.githubusercontent.com/58429034/198946311-32c66cd0-5eed-421a-8c4b-35bfc9e88718.png)
  

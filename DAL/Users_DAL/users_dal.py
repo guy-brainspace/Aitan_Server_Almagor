@@ -7,10 +7,17 @@ class Users_DAL():
 
     def get_all_users(self):
 
+        # mydb = mysql.connector.connect(
+        #     host="localhost",
+        #     user="root",
+        #     password="MayanAsifOno8",
+        #     database="aitan_users"
+        # )
+
         mydb = mysql.connector.connect(
-            host="localhost",
+            host="aitan2.cwlotalknksl.us-east-1.rds.amazonaws.com",
             user="root",
-            password="MayanAsifOno8",
+            password="Kazir$$$1000",
             database="aitan_users"
         )
 

@@ -50,7 +50,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:MayanAsifOno8@localhost/aitan_roni'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Kazir$$$1000@aitan2.cwlotalknksl.us-east-1.rds.amazonaws.com:3306/aitan_roni'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # # init the DB

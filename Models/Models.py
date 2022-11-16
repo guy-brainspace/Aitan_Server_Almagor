@@ -32,14 +32,14 @@ class Growers(db.Model):
 # -------------------------------------------------------
 
 class DealNames(db.Model):
-    __tablename__ = "dealNames"
+    __tablename__ = "dealnames"
     id = db.Column(db.Integer, primary_key=True)
     dealName = db.Column(db.String(50), unique=True, nullable=False)
     isActive = db.Column(db.Integer, server_default='1', nullable=False)
     created_date = db.Column(
         db.DateTime, server_default=db.func.current_timestamp())
-    receivingFruitID = db.relationship('Receiving_fruits', backref='dealNames')
-    dealNamesID = db.relationship('Deals', backref='dealNames')
+    receivingFruitID = db.relationship('Receiving_fruits', backref='dealnames')
+    dealNamesID = db.relationship('Deals', backref='dealnames')
 
 
 # -------------------------------------------------------
@@ -100,7 +100,7 @@ class Deals(db.Model):
     toDate = db.Column(db.Date)
     season = db.Column(db.Integer, nullable=False)
     dealNameID = db.Column(db.Integer, db.ForeignKey(
-        'dealNames.id'), nullable=False)
+        'dealnames.id'), nullable=False)
     fruitTypeID = db.Column(
         db.Integer, db.ForeignKey('fruits.id'), nullable=False)
     price1 = db.Column(db.Numeric(precision=10, scale=2, asdecimal=False,
@@ -133,7 +133,7 @@ class Receiving_fruits(db.Model):
     fruitTypeID = db.Column(
         db.Integer, db.ForeignKey('fruits.id'), nullable=False)
     dealNameID = db.Column(db.Integer, db.ForeignKey(
-        'dealNames.id'), nullable=False)
+        'dealnames.id'), nullable=False)
     packingMaterialID = db.Column(
         db.Integer, db.ForeignKey('packing_mat.id'), nullable=False)
     qtyInPacking = db.Column(db.Integer)

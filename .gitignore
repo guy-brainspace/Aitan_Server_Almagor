@@ -1,2 +1,4 @@
 MyVenv
 *.log
+.env
+**/.venv/**

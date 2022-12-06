@@ -1,5 +1,5 @@
 # “Aitan”Packing House's management tool
-This project was developed to assist the packinghouse to be more efficient by capturing it entire activities.
+This project was developed to assist "Aitan" packinghouse to be more efficient by capturing its entire activities.
 
 # Technological tools:
  ![image](https://user-images.githubusercontent.com/58429034/198946311-32c66cd0-5eed-421a-8c4b-35bfc9e88718.png)
@@ -10,9 +10,8 @@ Receiving Fruits section:
     erDiagram
         dealsname ||--o{ deals : "is part of"  
         fruits ||--o{ deals : "is part of"
-     
-        fruits ||--o{ receiving_fruits : "is part of"      
-        plots ||--o{ receiving_fruits : "is part of"
+        fruits ||--o{ plotsDunam : "is part of"
+        plotsDunam ||--o{ receiving_fruits : "is part of"
         packing_mat ||--o{ receiving_fruits : "is part of"
         packing_house ||--o{ receiving_fruits : "is part of"
         growers ||--o{ receiving_fruits : "is part of"
@@ -48,11 +47,16 @@ deals{
         date created_date
      }
 
-plots{
+plotsDunam{
         int ID PK
+        int season "unique"
         string PlotName "unique"
+        int fruitTypeID FK "unique"
+        int plantYear "unique"
+        int assamblyYear
+        int dunam
+        string plotOwner
         Boolean isActive
-        date created_date
      }
 
 packing_mat{

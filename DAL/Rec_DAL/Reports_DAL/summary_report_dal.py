@@ -1,4 +1,5 @@
 import mysql.connector
+import os
 from DAL.Rec_DAL.Reports_DAL.SQLReports.Summary.summaryMonthly import sql_query
 from DAL.Rec_DAL.Reports_DAL.SQLReports.Summary.SummarySeasonFruitPackhouse import sql_packingHouse_query
 from DAL.Rec_DAL.Reports_DAL.SQLReports.Summary.summarySeasson import sql_summarySeason
@@ -13,11 +14,12 @@ class Summary_report_DAL():
     def get_summary_monthly(self, season2filter, month2filter):
 
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 
@@ -30,11 +32,12 @@ class Summary_report_DAL():
 
     def get_summary_packingHouse(self, season2filter):
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 
@@ -47,11 +50,12 @@ class Summary_report_DAL():
 
     def get_summary_season(self, season2filter):
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 
@@ -64,11 +68,12 @@ class Summary_report_DAL():
 
     def get_summary_season_growers(self, season2filter):
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 
@@ -81,11 +86,12 @@ class Summary_report_DAL():
 
     def get_summary_monthly_packingMat(self, season2filter, month2filter):
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 

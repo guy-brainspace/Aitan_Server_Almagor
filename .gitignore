@@ -1,4 +1,6 @@
 MyVenv
+.vscode
 *.log
 .env
 **/.venv/**
+zappa_settings.json

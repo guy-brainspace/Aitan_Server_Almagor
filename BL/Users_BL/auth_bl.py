@@ -1,5 +1,6 @@
 from flask import make_response, request
 import jwt
+import os
 
 from DAL.Users_DAL.users_dal import Users_DAL
 from BL.Users_BL.users_bl import Users_BL
@@ -7,8 +8,8 @@ from BL.Users_BL.users_bl import Users_BL
 
 class Auth_BL:
     def __init__(self):
-        self.__key = "secretKeyE0DE73DB7F9828A48EAC75CC76E5FD02401A106"
-        self.__algorithm = "HS256"
+        self.__key = os.environ.get("DB_KEY")
+        self.__algorithm =  os.environ.get("DB_ALGORITHM")
 
         self.users_dal = Users_DAL()
         self.users_bl = Users_BL()
@@ -47,7 +48,7 @@ class Auth_BL:
         users_all_data_list = self.users_bl.get_usernames()
         for u in users_all_data_list:
             if u["id"] == user_id:
-                return True, u
+                return True, u # == exist, user
         return False, []
 
     # ---3

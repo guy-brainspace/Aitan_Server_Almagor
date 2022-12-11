@@ -2,7 +2,7 @@ import mysql.connector
 from DAL.Local_DAL.SQL_DAL.ClosingData.closingData import sql_query_closingData
 from Models.Models import ClosingData
 import datetime
-
+import os
 
 class ClosingData_DAL():
     def __init__(self):
@@ -10,11 +10,23 @@ class ClosingData_DAL():
 
     def get_all_closingData(self, filteredSeason):
 
+        # mydb = mysql.connector.connect(
+        #     host="localhost",
+        #     user="root",
+        #     password="MayanAsifOno8",
+        #     database="aitan_roni"
+        # )
+        # mydb = mysql.connector.connect(
+        #     host="aitan2.cwlotalknksl.us-east-1.rds.amazonaws.com",
+        #     user="root",
+        #     password="$$brain.space$$88",
+        #     database="aitan_roni"
+        # )
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
 
         mycursor = mydb.cursor()

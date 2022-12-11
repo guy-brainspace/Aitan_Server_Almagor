@@ -3,6 +3,7 @@
 # from sqlalchemy import extract,  func
 
 import mysql.connector
+import os
 from DAL.Rec_DAL.Reports_DAL.SQLReports.Monthly.per_fruitType import sql_query
 from DAL.Rec_DAL.Reports_DAL.SQLReports.Monthly.per_FruitType_Deal import sql_query_perDeal
 
@@ -30,11 +31,17 @@ class Monthly_report_DAL():
         #             .all()
 
         # return monthData
+          # mydb = mysql.connector.connect(
+        #     host="localhost",
+        #     user="root",
+        #     password="MayanAsifOno8",
+        #     database="aitan_roni"
+        # )
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
 
         mycursor = mydb.cursor()
@@ -50,11 +57,12 @@ class Monthly_report_DAL():
 
         # return monthData
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 

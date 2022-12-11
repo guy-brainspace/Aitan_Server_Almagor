@@ -12,11 +12,11 @@ sql_query_resellerInfo = '''
                     (-1*sum(c.closePrice *c.closeWeight) *(dnh.traderPrcnt+dnh.distributerPrcnt))+(-1*sum(c.closePrice *c.closeWeight) *(dnh.traderPrcnt+dnh.distributerPrcnt)*dnh.VAT) as total_reduce_per_reseller
                     from invoice_header ih 
                     left join invoice_lines il on (il.invoiceHeaderID=ih.id)
-                    left join deliveryNote_header dnh on (il.deliveryNote_headerID=dnh.id)
+                    left join deliverynote_header dnh on (il.deliveryNote_headerID=dnh.id)
                     left join deliverynote_lines dnl on (dnl.deliveryNote_headerID=dnh.id)
-                    left join fruitPalletCreation_header ph on (dnl.fruitPalletCreation_headerID=ph.id)
+                    left join fruitpalletcreation_header ph on (dnl.fruitPalletCreation_headerID=ph.id)
                     left join  fruitpalletcreation_lines pl on (pl.fruitPalletCreation_headerID=ph.id) 
-                    left join closingData c on (c.fruitPalletCreationLineID=pl.id)
+                    left join closingdata c on (c.fruitPalletCreationLineID=pl.id)
                     where il.invoiceHeaderID=(%s)
                     group by invoiceNum, VAT, traderPrcnt, distributerPrcnt
                     )

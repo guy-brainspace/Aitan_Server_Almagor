@@ -9,9 +9,9 @@ sql_query_palletCost = '''
                         pmc.palletMatCost*dnh.VAT as total
                         from invoice_header ih 
                         left join invoice_lines il on (il.invoiceHeaderID=ih.id)
-                        left join deliveryNote_header dnh on (il.deliveryNote_headerID=dnh.id)
+                        left join deliverynote_header dnh on (il.deliveryNote_headerID=dnh.id)
                         left join deliverynote_lines dnl on (dnl.deliveryNote_headerID=dnh.id)
-                        left join fruitPalletCreation_header ph on (dnl.fruitPalletCreation_headerID=ph.id)
+                        left join fruitpalletcreation_header ph on (dnl.fruitPalletCreation_headerID=ph.id)
                         left join palletsmat pm on (ph.palletMatID=pm.id)
                         left join palletsmatcost pmc on (pmc.palletMatID=pm.id
                                                                         and (dnh.deliveryDate>=pmc.fromDate and dnh.deliveryDate<=pmc.toDate)

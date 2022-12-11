@@ -1,5 +1,5 @@
 import mysql.connector
-
+import os
 
 class Users_DAL():
     def __init__(self):
@@ -7,18 +7,11 @@ class Users_DAL():
 
     def get_all_users(self):
 
-        # mydb = mysql.connector.connect(
-        #     host="localhost",
-        #     user="root",
-        #     password="MayanAsifOno8",
-        #     database="aitan_users"
-        # )
-
         mydb = mysql.connector.connect(
-            host="aitan2.cwlotalknksl.us-east-1.rds.amazonaws.com",
-            user="root",
-            password="Kazir$$$1000",
-            database="aitan_users"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASEUSERS")
         )
 
         mycursor = mydb.cursor()

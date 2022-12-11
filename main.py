@@ -1,9 +1,11 @@
 import json
+import os
 
 from BL.Users_BL.auth_bl import Auth_BL
 
 from BL.Rec_BL.packingMaterials_bl import PackingMaterials_BL
-from BL.Rec_BL.plots_bl import Plots_BL
+# from BL.Rec_BL.plots_bl import Plots_BL
+from BL.Rec_BL.plotsDunam_bl import PlotsDunam_BL
 from BL.Rec_BL.fruits_bl import Fruits_BL
 from BL.Rec_BL.packingHouse_bl import PackingHouse_BL
 from BL.Rec_BL.growers_bl import Growers_BL
@@ -44,13 +46,15 @@ from BL.Local_BL.Reports_BL.palletsWOinvoices_report_bl import Pallets_wo_invoic
 from confdb import db
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Kazir$$$1000@aitan2.cwlotalknksl.us-east-1.rds.amazonaws.com:3306/aitan_roni'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # # init the DB
@@ -63,7 +67,8 @@ auth_bl = Auth_BL()
 growers_bl = Growers_BL()
 packingHouse_bl = PackingHouse_BL()
 fruits_bl = Fruits_BL()
-plots_bl = Plots_BL()
+# plots_bl = Plots_BL()
+plotsDunam_bl = PlotsDunam_BL()
 packingMaterials_bl = PackingMaterials_BL()
 dealNames_bl = DealNames_BL()
 receivingFruits_bl = ReceivingFruits_BL()
@@ -287,23 +292,91 @@ def delete_fruit(id):
 # =============== plots =================================
 
 
+# @app.route('/plots', methods=['GET'])
+# def get_plots():
+#     resp = auth_bl.token_verification()
+#     if resp == "not authorized":
+#         return jsonify("The user is not autorized")
+#     else:
+#         data = plots_bl.get_plots()
+#         return jsonify(data)
+
+
+# @app.route('/plots', methods=['POST'])
+# def add_plot():
+#     data = request.json
+#     if (data['plotName'] == ''):
+#         return jsonify("issueWithFieldData")
+#     else:
+#         new_record = plots_bl.add_plot(data)
+#         db.session.add(new_record)
+#         try:
+#             db.session.commit()
+#             return jsonify(new_record.id)  # return the id of the added item
+#         except:
+#             db.session.rollback()
+#             return jsonify("issueWithRecord")
+
+
+# @app.route('/plots/<string:id>', methods=['PUT'])
+# def update_plot(id):
+#     data = request.json
+#     if (data['plotName'] == ''):
+#         return jsonify("issueWithFieldData")
+#     else:
+#         plots_bl.update_plot(id, data)
+#         try:
+#             db.session.commit()
+#             return jsonify("updated plot")
+#         except:
+#             db.session.rollback()
+#             return jsonify("issueWithRecord")
+
+
+# @app.route('/plots/<string:id>', methods=['DELETE'])
+# def delete_plot(id):
+#     plots_bl.delete_plot(id)
+#     db.session.commit()
+#     return jsonify("deleted plot")
+
+    
+# =======================================================
+# =============== plotsdunam =================================
+
+
 @app.route('/plots', methods=['GET'])
 def get_plots():
     resp = auth_bl.token_verification()
     if resp == "not authorized":
         return jsonify("The user is not autorized")
     else:
-        data = plots_bl.get_plots()
+        # data = plots_bl.get_plots()
+        filteredSeason = int(request.args.get('season2filter'))
+        data = plotsDunam_bl.get_plots(filteredSeason)
         return jsonify(data)
+
+
+@app.route('/plots/<string:filteredPrevSeason>', methods=['POST'])
+def copy_prev_years_plots(filteredPrevSeason):
+    new_record=plotsDunam_bl.copy_prev_years_plots(filteredPrevSeason)
+    db.session.add_all(new_record)
+    try:
+        db.session.commit()
+        return jsonify("copy all plots from prev year")
+    except:
+        db.session.rollback()
+        return jsonify("issueWithRecord")
 
 
 @app.route('/plots', methods=['POST'])
 def add_plot():
     data = request.json
-    if (data['plotName'] == ''):
+    #if (data['plotName'] == '':
+    if (data['plotName'] == '' or data['season'] == '' or data['fruitTypeID']=='' or data['plantYear']==''):
         return jsonify("issueWithFieldData")
     else:
-        new_record = plots_bl.add_plot(data)
+        # new_record = plots_bl.add_plot(data)
+        new_record = plotsDunam_bl.add_plot(data)
         db.session.add(new_record)
         try:
             db.session.commit()
@@ -316,10 +389,11 @@ def add_plot():
 @app.route('/plots/<string:id>', methods=['PUT'])
 def update_plot(id):
     data = request.json
-    if (data['plotName'] == ''):
+    #if (data['plotName'] == '':
+    if (data['plotName'] == '' or data['season'] == '' or data['fruitTypeID']=='' or data['plantYear']==''):
         return jsonify("issueWithFieldData")
     else:
-        plots_bl.update_plot(id, data)
+        plotsDunam_bl.update_plot(id, data)
         try:
             db.session.commit()
             return jsonify("updated plot")
@@ -330,7 +404,8 @@ def update_plot(id):
 
 @app.route('/plots/<string:id>', methods=['DELETE'])
 def delete_plot(id):
-    plots_bl.delete_plot(id)
+    # plots_bl.delete_plot(id)
+    plotsDunam_bl.delete_plot(id)
     db.session.commit()
     return jsonify("deleted plot")
 
@@ -458,7 +533,8 @@ def add_receivingFruit():
     data = request.json
 
     # in case not all fields were filled
-    if data['season'] == '' or data['growerID'] == 'בחר' or data['packingHouseID'] == 'בחר' or data['plotID'] == 'בחר' or data['fruitTypeID'] == 'בחר' or data['packingMaterialID'] == 'בחר':
+    # or data['fruitTypeID'] == 'בחר'
+    if data['season'] == '' or data['growerID'] == 'בחר' or data['packingHouseID'] == 'בחר' or data['plotID'] == 'בחר'  or data['packingMaterialID'] == 'בחר':
         return jsonify("issueWithFieldData")
     new_record = receivingFruits_bl.add_receivingFruit(data)
     db.session.add(new_record)

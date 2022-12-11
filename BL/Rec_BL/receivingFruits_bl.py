@@ -36,12 +36,12 @@ class ReceivingFruits_BL:
             d['packingHouseName'] = rec_fruit.packinghouse.packingHouseName
             d['packingHouselocation'] = rec_fruit.packinghouse.location
             d['plotID'] = rec_fruit.plotID
-            d['plotName'] = rec_fruit.plots.plotName
+            d['plotName'] = rec_fruit.plotsdunam.plotName
             d['fruitTypeID'] = rec_fruit.fruitTypeID
             d['fruitName'] = rec_fruit.fruits.fruitName
             d['fruitType'] = rec_fruit.fruits.fruitType
             d['dealNameID'] = rec_fruit.dealNameID
-            d['dealName'] = rec_fruit.dealNames.dealName
+            d['dealName'] = rec_fruit.dealnames.dealName
             d['packingMaterialID'] = rec_fruit.packingMaterialID
             d['packingType'] = rec_fruit.packing_mat.packingType
             d['qtyInPacking'] = rec_fruit.qtyInPacking

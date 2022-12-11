@@ -45,7 +45,7 @@ plotSummaryperDates = '''
                                                                     and rec.receivingDate between deals.fromDate and  deals.toDate
                         left join  aitan_roni.growers growers on rec.growerID=growers.id
                         left join  aitan_roni.packinghouse packinghouse on rec.packingHouseID=packinghouse.id
-                        left join  aitan_roni.plots plots on rec.plotID=plots.id
+                        left join  aitan_roni.plotsdunam plots on rec.plotID=plots.id
                         left join  aitan_roni.fruits fruits on rec.fruitTypeID=fruits.id
                         left join  aitan_roni.dealnames dealnames on rec.dealnameID=dealnames.id
                         left join  aitan_roni.packing_mat packing_mat on rec.packingMaterialID=packing_mat.id

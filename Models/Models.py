@@ -44,15 +44,33 @@ class DealNames(db.Model):
 
 # -------------------------------------------------------
 
-class Plots(db.Model):
-    __tablename__ = "plots"
-    id = db.Column(db.Integer, primary_key=True)
-    plotName = db.Column(db.String(30), unique=True, nullable=False)
-    isActive = db.Column(db.Integer,  server_default='1',  nullable=False)
-    created_date = db.Column(
-        db.DateTime, server_default=db.func.current_timestamp())
-    receivingFruitID = db.relationship('Receiving_fruits', backref='plots')
+# class Plots(db.Model):
+#     __tablename__ = "plots"
+#     id = db.Column(db.Integer, primary_key=True)
+#     plotName = db.Column(db.String(30), unique=True, nullable=False)
+#     isActive = db.Column(db.Integer,  server_default='1',  nullable=False)
+#     created_date = db.Column(
+#         db.DateTime, server_default=db.func.current_timestamp())
+#     receivingFruitID = db.relationship('Receiving_fruits', backref='plots')
 
+# -------------------------------------------------------
+
+class PlotsDunam(db.Model):
+    __tablename__ = "plotsdunam"
+    __table_args__ = (
+        db.UniqueConstraint('season', 'plotName', 'fruitTypeID', 'plantYear','assamblyYear'),
+    )
+    id = db.Column(db.Integer, primary_key=True)
+    season=db.Column(db.Integer, nullable=False)
+    plotName = db.Column(db.String(30), unique=True, nullable=False)
+    fruitTypeID = db.Column(
+        db.Integer, db.ForeignKey('fruits.id'), nullable=False)
+    plantYear=db.Column(db.Integer, nullable=False) 
+    assamblyYear=db.Column(db.Integer) 
+    dunam=db.Column(db.Integer, server_default='0', nullable=False)
+    plotOwner= db.Column(db.String(30), nullable=False)
+    isActive = db.Column(db.Integer, server_default='1', nullable=False)
+    receivingFruitID = db.relationship('Receiving_fruits', backref='plotsdunam')
 
 # -------------------------------------------------------
 
@@ -129,7 +147,8 @@ class Receiving_fruits(db.Model):
     deliverNote = db.Column(db.String(80), nullable=False)
     packingHouseID = db.Column(db.Integer, db.ForeignKey(
         'packinghouse.id'), nullable=False)
-    plotID = db.Column(db.Integer, db.ForeignKey('plots.id'), nullable=False)
+    # plotID = db.Column(db.Integer, db.ForeignKey('plots.id'), nullable=False)
+    plotID = db.Column(db.Integer, db.ForeignKey('plotsdunam.id'), nullable=False)
     fruitTypeID = db.Column(
         db.Integer, db.ForeignKey('fruits.id'), nullable=False)
     dealNameID = db.Column(db.Integer, db.ForeignKey(
@@ -160,6 +179,7 @@ class Fruits(db.Model):
     receivingFruitID = db.relationship('Receiving_fruits', backref='fruits')
     dealNamesID = db.relationship('Deals', backref='fruits')
     marketFruitName = db.relationship('Market_fruits', backref='fruits')
+    plots = db.relationship('PlotsDunam', backref='fruits')
 
 # -------------------------------------------------------
 #               Local Market Tables
@@ -291,7 +311,7 @@ class Traders(db.Model):
 
 
 class FruitPalletCreation_header(db.Model):
-    __tablename__ = "fruitPalletCreation_header"
+    __tablename__ = "fruitpalletcreation_header"
     __table_args__ = (
         db.UniqueConstraint('season', 'palletNum'),
     )
@@ -312,11 +332,11 @@ class FruitPalletCreation_header(db.Model):
 
 
 class FruitPalletCreation_lines(db.Model):
-    __tablename__ = "fruitPalletCreation_lines"
+    __tablename__ = "fruitpalletcreation_lines"
 
     id = db.Column(db.Integer,  primary_key=True)
     fruitPalletCreation_headerID = db.Column(db.Integer, db.ForeignKey(
-        'fruitPalletCreation_header.id'), nullable=False)
+        'fruitpalletcreation_header.id'), nullable=False)
     matketFruitID = db.Column(db.Integer, db.ForeignKey(
         'market_fruits.id'), nullable=False)
     marketPackingMatTypeID = db.Column(
@@ -331,7 +351,7 @@ class FruitPalletCreation_lines(db.Model):
 
 
 class DeliveryNote_header(db.Model):
-    __tablename__ = "deliveryNote_header"
+    __tablename__ = "deliverynote_header"
     __table_args__ = (
         db.UniqueConstraint('season', 'deliveryNoteNum'),
     )
@@ -356,19 +376,19 @@ class DeliveryNote_header(db.Model):
 
 
 class DeliveryNote_lines(db.Model):
-    __tablename__ = "deliveryNote_lines"
+    __tablename__ = "deliverynote_lines"
 
     id = db.Column(db.Integer,  primary_key=True)
     deliveryNote_headerID = db.Column(db.Integer, db.ForeignKey(
-        'deliveryNote_header.id'), nullable=False)
+        'deliverynote_header.id'), nullable=False)
     fruitPalletCreation_headerID = db.Column(db.Integer, db.ForeignKey(
-        'fruitPalletCreation_header.id'), nullable=False)
+        'fruitpalletcreation_header.id'), nullable=False)
     created_date = db.Column(
         db.DateTime, server_default=db.func.current_timestamp())
 
 
 class Manufacturer_Invoice(db.Model):
-    __tablename__ = "manufacturer_Invoice"
+    __tablename__ = "manufacturer_invoice"
     __table_args__ = (
         db.UniqueConstraint('season', 'ManufacturerInvNum'),
     )
@@ -387,11 +407,11 @@ class Manufacturer_Invoice(db.Model):
 
 
 class ClosingData(db.Model):
-    __tablename__ = "closingData"
+    __tablename__ = "closingdata"
 
     id = db.Column(db.Integer,  primary_key=True)
     fruitPalletCreationLineID = db.Column(db.Integer, db.ForeignKey(
-        'fruitPalletCreation_lines.id'), nullable=False)
+        'fruitpalletcreation_lines.id'), nullable=False)
     closeWeight = db.Column(db.Numeric(
         precision=10, scale=2, asdecimal=False, decimal_return_scale=None), server_default='0')
     closePrice = db.Column(db.Numeric(
@@ -414,7 +434,7 @@ class Invoice_header(db.Model):
     traderID = db.Column(db.Integer, db.ForeignKey(
         'traders.id'), nullable=False)
     manufacturerInvoiceID = db.Column(db.Integer, db.ForeignKey(
-        'manufacturer_Invoice.id'), nullable=True)
+        'manufacturer_invoice.id'), nullable=True)
     invoiceStatus = db.Column(db.String(30), server_default='פתוחה')
     created_date = db.Column(
         db.DateTime, server_default=db.func.current_timestamp())
@@ -431,7 +451,7 @@ class Invoice_lines(db.Model):
     invoiceHeaderID = db.Column(db.Integer, db.ForeignKey(
         'invoice_header.id'),  unique=True, nullable=False)
     deliveryNote_headerID = db.Column(db.Integer, db.ForeignKey(
-        'deliveryNote_header.id'), unique=True,  nullable=False)
+        'deliverynote_header.id'), unique=True,  nullable=False)
     created_date = db.Column(
         db.DateTime, server_default=db.func.current_timestamp())
 

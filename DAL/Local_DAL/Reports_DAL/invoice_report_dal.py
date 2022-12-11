@@ -11,10 +11,16 @@ class Invoice_report_DAL():
        
     def get_reportData(self, sql, id):
         
+           # mydb = mysql.connector.connect(
+        #     host="localhost",
+        #     user="root",
+        #     password="MayanAsifOno8",
+        #     database="aitan_roni"
+        # )
         mydb = mysql.connector.connect(
-            host="localhost",
+            host="aitan2.cwlotalknksl.us-east-1.rds.amazonaws.com",
             user="root",
-            password="MayanAsifOno8",
+            password="$$brain.space$$88",
             database="aitan_roni"
         )
 

@@ -18,7 +18,7 @@ sql_query_deliveryNote2prct = '''
                         left join market_packing_mat mpm on (pl. marketPackingMatTypeID=mpm.id)
                         left join market_fruits mf on (pl.matketFruitID = mf.id)
                         left join fruits f on (mf.fruitID=f.id)
-                        left join fruitSize fs on (mf.sizeID=fs.id)
+                        left join fruitsize fs on (mf.sizeID=fs.id)
                         where h.deliveryNoteNum=(%s)
                                         and h.season =(%s)
                     )

@@ -1,4 +1,5 @@
 import mysql.connector
+import os
 from DAL.Rec_DAL.Reports_DAL.SQLReports.PlotSummary.plotSummary import plotSummaryperDates
 from DAL.Rec_DAL.Reports_DAL.SQLReports.PlotSummary.allPlotSummary import allPlotSummaryperDates
 
@@ -9,11 +10,12 @@ class Plot_report_DAL():
 
     def get_plot_per_dates(self, plotName2Filter, fromDate2filter, toDate2filter):
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 
@@ -26,11 +28,12 @@ class Plot_report_DAL():
 
     def get_plots_per_dates(self, fromDate2filter, toDate2filter):
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="MayanAsifOno8",
-            database="aitan_roni"
+            host=os.environ.get("DB_HOST"),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_DATABASE")
         )
+
 
         mycursor = mydb.cursor()
 

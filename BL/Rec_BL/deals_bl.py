@@ -17,7 +17,7 @@ class Deals_BL:
             d['toDate'] = deal.toDate
             d['season'] = deal.season
             d['dealNameID'] = deal.dealNameID
-            d['dealName'] = deal.dealNames.dealName
+            d['dealName'] = deal.dealnames.dealName
             d['fruitTypeID'] = deal.fruitTypeID
             d['fruitName'] = deal.fruits.fruitName
             d['fruitType'] = deal.fruits.fruitType
